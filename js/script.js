@@ -82,21 +82,19 @@ let botonera = document.getElementById("botonera");
 let intentos = document.getElementById("intentos");
 let imagen = document.getElementById("imagen");
 let pista = document.getElementById("pista");
+const textPista = document.getElementById("texto-pista")
 
-
-
-//Al generar los botones del abecedario las clases que tiene cada botón:
-
-      // tamanio-botones btn btn-outline-success m-1 font-weight-bold;
-
-      
+   
 // Al hacer click en las letras cuando acertamos y fallamos las clase de los botones pueden ser:
 
-    //  tamanio-botones btn btn-danger m-1;
-    //  tamanio-botones btn btn-success m-1;
-   
-    
-// generamos el abecedario y lo mostramos en pantalla
+  //  tamanio-botones btn btn-danger m-1;
+  //  tamanio-botones btn btn-success m-1;
+
+const palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
+const palabraOculta = posiblesPalabras[palabraRandom][0];
+const pistaOculta = posiblesPalabras[palabraRandom][1];
+
+// Generate the alphabet and show it on the screen
 const generarPalabra = (event) => {
 
   for (const abe of abecedario) {
@@ -105,32 +103,57 @@ const generarPalabra = (event) => {
     letra.classList.add("tamanio-botones", "btn", "btn-outline-success", "m-1", "font-weight-bold")
     botonera.appendChild(letra);
   }
-
-  let palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
-  let palabraOculta = posiblesPalabras[palabraRandom][0];
   console.log(palabraOculta)
+  // add the necessary scripts
   let guion = "_ ";
   for(let i = 0; i < palabraOculta.length; i++){
 
     palabra.textContent += "_";
 
   }
-  
 
 }
 document.addEventListener("DOMContentLoaded", generarPalabra);
 
+
+// Add clue
 const aniadirPista = (event) => {
 
-  let palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
-  let palabraOculta = posiblesPalabras[palabraRandom][1];
-  console.log(palabraOculta)
-
+  textPista.textContent = pistaOculta;
 
 }
 
 pista.addEventListener("click", aniadirPista);
 
+// Update Page
+inicio.addEventListener("click", (event) => {
 
+  document.location.reload();
+
+})
+
+const comprobarLetra = (event) =>{
+
+  let element = event.target;
+  if(element.nodeName === "BUTTON"){
+    
+    if(palabraOculta.includes(element.innerText)){
+      console.log(event)
+
+      element.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
+
+    }else{
+      
+      element.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
+      palabra--;
+      palabra.textContent = palabra;
+
+    }
+
+
+  }
+}
+
+botonera.addEventListener("click", comprobarLetra)
 
 
