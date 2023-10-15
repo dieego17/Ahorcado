@@ -90,9 +90,15 @@ const textPista = document.getElementById("texto-pista")
   //  tamanio-botones btn btn-danger m-1;
   //  tamanio-botones btn btn-success m-1;
 
+
+
 const palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
 const palabraOculta = posiblesPalabras[palabraRandom][0];
 const pistaOculta = posiblesPalabras[palabraRandom][1];
+
+  // add the necessary scripts
+  const guion = document.createElement("SPAN");
+  palabra.appendChild(guion)
 
 // Generate the alphabet and show it on the screen
 const generarPalabra = (event) => {
@@ -104,8 +110,8 @@ const generarPalabra = (event) => {
     botonera.appendChild(letra);
   }
   console.log(palabraOculta)
-  // add the necessary scripts
-  let guion = "_ ";
+  console.log(pistaOculta)
+
   for(let i = 0; i < palabraOculta.length; i++){
 
     palabra.textContent += "_";
@@ -132,28 +138,65 @@ inicio.addEventListener("click", (event) => {
 
 })
 
+
+
 const comprobarLetra = (event) =>{
 
-  let element = event.target;
-  if(element.nodeName === "BUTTON"){
-    
-    if(palabraOculta.includes(element.innerText)){
-      console.log(event)
-
-      element.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
-
-    }else{
-      
-      element.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
-      palabra--;
-      palabra.textContent = palabra;
-
-    }
-
-
+  const spans = document.querySelectorAll("#palabra span")
+  const button = event.target;
+  button.disabled = true;
+  const letra = button.innerHTML;
+  const letraAbe = [];
+  for (let i = 0; i < letra.length; i++) {
+    letraAbe.push(letra[i].toLowerCase());
   }
+
+  let acierto = false;
+  for(let i = 0; i < palabraOculta.length; i++){
+    if(letraAbe == palabraOculta[i]){
+      spans[i].innerHTML = letraAbe;
+      /* button.classList.add("tamanio-botones", "btn", "btn-danger", "m-1") */
+      acierto = true;
+    }
+  }
+
+
+  console.log("La letra "+letraAbe+" en la palabra "+palabraOculta
+  +" existe? "+acierto)
+  
 }
 
+
+
 botonera.addEventListener("click", comprobarLetra)
+
+/* if(element.nodeName === "BUTTON"){
+  element.disabled = true;
+
+  if(palabraOculta.includes(element.innerText)){
+    console.log(event)
+
+    element.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
+
+  }else{
+    
+    element.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
+    palabra--;
+    palabra.textContent = palabra;
+
+  }
+} */
+
+/* const btn_letra = document.querySelectorAll("#botonera")
+
+for(let i = 0; i < btn_letra.length; i++){
+  btn_letra[i].addEventListener("click", clickLetras);
+}
+
+function clickLetras () {
+
+  console.log("Pulsaste un letra");
+
+} */
 
 
