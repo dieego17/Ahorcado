@@ -84,6 +84,9 @@ let imagen = document.getElementById("imagen");
 let pista = document.getElementById("pista");
 const textPista = document.getElementById("texto-pista")
 
+
+
+
    
 // Al hacer click en las letras cuando acertamos y fallamos las clase de los botones pueden ser:
 
@@ -96,9 +99,7 @@ const palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
 const palabraOculta = posiblesPalabras[palabraRandom][0];
 const pistaOculta = posiblesPalabras[palabraRandom][1];
 
-  // add the necessary scripts
-  const guion = document.createElement("SPAN");
-  palabra.appendChild(guion)
+
 
 // Generate the alphabet and show it on the screen
 const generarPalabra = (event) => {
@@ -111,10 +112,12 @@ const generarPalabra = (event) => {
   }
   console.log(palabraOculta)
   console.log(pistaOculta)
-
+  // add the necessary scripts
+  let guion = "_";
   for(let i = 0; i < palabraOculta.length; i++){
-
-    palabra.textContent += "_";
+    let span = document.createElement("SPAN");
+    palabra.appendChild(span)
+    span.textContent += guion;
 
   }
 
@@ -142,7 +145,7 @@ inicio.addEventListener("click", (event) => {
 
 const comprobarLetra = (event) =>{
 
-  const spans = document.querySelectorAll("#palabra span")
+  const spans = document.querySelectorAll("#palabra span");
   const button = event.target;
   button.disabled = true;
   const letra = button.innerHTML;
@@ -154,12 +157,19 @@ const comprobarLetra = (event) =>{
   let acierto = false;
   for(let i = 0; i < palabraOculta.length; i++){
     if(letraAbe == palabraOculta[i]){
-      spans[i].innerHTML = letraAbe;
-      /* button.classList.add("tamanio-botones", "btn", "btn-danger", "m-1") */
+      spans[i].textContent = letraAbe;
+      button.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
       acierto = true;
     }
   }
 
+  if(acierto == false){
+    intentos.textContent--;
+    console.log(intentos)
+      intentos.innerHTML = intentos;
+      const source = `imagenes/ahorcado_${intentos.textContent}.png`;
+      imagen.src = source;
+  }
 
   console.log("La letra "+letraAbe+" en la palabra "+palabraOculta
   +" existe? "+acierto)
