@@ -84,21 +84,9 @@ let imagen = document.getElementById("imagen");
 let pista = document.getElementById("pista");
 const textPista = document.getElementById("texto-pista")
 
-
-
-
-   
-// Al hacer click en las letras cuando acertamos y fallamos las clase de los botones pueden ser:
-
-  //  tamanio-botones btn btn-danger m-1;
-  //  tamanio-botones btn btn-success m-1;
-
-
-
 const palabraRandom = Math.floor(Math.random()* posiblesPalabras.length);
 const palabraOculta = posiblesPalabras[palabraRandom][0];
 const pistaOculta = posiblesPalabras[palabraRandom][1];
-
 
 
 // Generate the alphabet and show it on the screen
@@ -114,6 +102,8 @@ const generarPalabra = (event) => {
   console.log(pistaOculta)
   // add the necessary scripts
   let guion = "_";
+  //vemos la longitud de la palabra oculta y generamos span 
+  //y ponemos tantos guiones como letras tenga la palabra
   for(let i = 0; i < palabraOculta.length; i++){
     let span = document.createElement("SPAN");
     palabra.appendChild(span)
@@ -145,68 +135,64 @@ inicio.addEventListener("click", (event) => {
 
 const comprobarLetra = (event) =>{
 
+  // seleccionamos toods los span creados
   const spans = document.querySelectorAll("#palabra span");
   const button = event.target;
+  //el boton se desabilita cuando le pulsamos
   button.disabled = true;
   const letra = button.innerHTML;
+  //generamos un array para meter todas las letras de los botones
+  //y convertirlas a minuscula
   const letraAbe = [];
   for (let i = 0; i < letra.length; i++) {
     letraAbe.push(letra[i].toLowerCase());
   }
 
   let acierto = false;
-  for(let i = 0; i < palabraOculta.length; i++){
-    if(letraAbe == palabraOculta[i]){
-      spans[i].textContent = letraAbe;
-      button.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
-      acierto = true;
+  if(button.nodeName === "BUTTON"){
+    //recorremos las longitud de la palabra oculta
+    for(let i = 0; i < palabraOculta.length; i++){
+      //comprobamos si la letra que hemos pulsado es igual a alguna 
+      //letra de la palabra oculta
+      if(letraAbe == palabraOculta[i]){
+        //la letra que hemos seleccionado si se ecnuentra en la palabra
+        //reemplaza los guiones en su posicion
+        spans[i].textContent = letraAbe;
+        button.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
+        acierto = true;
+        if(palabra === palabraOculta){
+          botonera.textContent = "FELICIDADES";
+          botonera.classList.add("cabecera");
+          palabra.textContent = palabraOculta
+        }
+      }
+      
+    }
+
+    if(acierto == false){
+      button.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
+      if(intentos.textContent > "0"){
+        //bajamos el numero de intentos
+        intentos.textContent--;
+        intentos.innerHTML = intentos.textContent;
+        //añadimos la imagen segun bajen los intentos
+        imagen.src = "./imagenes/ahorcado_"+intentos.innerHTML+".png";
+      }
+      if(intentos.textContent == "0"){
+        //cuando llega a 0, se muestra en pantalla
+        botonera.textContent = "NO HAS ACERTADO!!!"
+        botonera.classList.add("cabecera");
+        palabra.textContent = "LA PALABRA ERA: "+palabraOculta;
+      }
+        
     }
   }
-
-  if(acierto == false){
-    intentos.textContent--;
-    console.log(intentos)
-      intentos.innerHTML = intentos;
-      const source = `imagenes/ahorcado_${intentos.textContent}.png`;
-      imagen.src = source;
-  }
-
-  console.log("La letra "+letraAbe+" en la palabra "+palabraOculta
-  +" existe? "+acierto)
   
 }
 
 
-
 botonera.addEventListener("click", comprobarLetra)
 
-/* if(element.nodeName === "BUTTON"){
-  element.disabled = true;
 
-  if(palabraOculta.includes(element.innerText)){
-    console.log(event)
-
-    element.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
-
-  }else{
-    
-    element.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
-    palabra--;
-    palabra.textContent = palabra;
-
-  }
-} */
-
-/* const btn_letra = document.querySelectorAll("#botonera")
-
-for(let i = 0; i < btn_letra.length; i++){
-  btn_letra[i].addEventListener("click", clickLetras);
-}
-
-function clickLetras () {
-
-  console.log("Pulsaste un letra");
-
-} */
 
 
