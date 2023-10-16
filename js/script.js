@@ -132,7 +132,7 @@ inicio.addEventListener("click", (event) => {
 })
 
 
-
+//evento en el que comprobamos la letra
 const comprobarLetra = (event) =>{
 
   // seleccionamos toods los span creados
@@ -160,14 +160,20 @@ const comprobarLetra = (event) =>{
         spans[i].textContent = letraAbe;
         button.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
         acierto = true;
-        if(palabra === palabraOculta){
-          botonera.textContent = "FELICIDADES";
-          botonera.classList.add("cabecera");
-          palabra.textContent = palabraOculta
-        }
       }
       
     }
+    
+    //si la letra que hemos acertado es igual a la palabra oculta, 
+    //mostramos en la pantalla una ferlicitacion
+    if(palabra.textContent === palabraOculta){
+      botonera.textContent = "FELICIDADES!!!"
+      botonera.classList.add("cabecera");
+      palabra.textContent = palabraOculta;
+    } 
+    
+    console.log(palabra)
+    console.log(palabraOculta)
 
     if(acierto == false){
       button.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
