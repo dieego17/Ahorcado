@@ -158,7 +158,7 @@ const comprobarLetra = (event) =>{
         //la letra que hemos seleccionado si se ecnuentra en la palabra
         //reemplaza los guiones en su posicion
         spans[i].textContent = letraAbe;
-        button.classList.add("tamanio-botones", "btn", "btn-success", "m-1")
+        button.classList.add("tamanio-botones", "btn", "btn-success", "bg-success", "text-white", "m-1")
         acierto = true;
       }
       
@@ -166,7 +166,7 @@ const comprobarLetra = (event) =>{
     
     //si la letra que hemos acertado es igual a la palabra oculta, 
     //mostramos en la pantalla una ferlicitacion
-    if(palabra.textContent === palabraOculta){
+    if(palabra === palabraOculta){
       botonera.textContent = "FELICIDADES!!!"
       botonera.classList.add("cabecera");
       palabra.textContent = palabraOculta;
@@ -176,7 +176,7 @@ const comprobarLetra = (event) =>{
     console.log(palabraOculta)
 
     if(acierto == false){
-      button.classList.add("tamanio-botones", "btn", "btn-danger", "m-1")
+      button.classList.add("tamanio-botones", "btn", "btn-danger", "bg-danger", "m-1")
       if(intentos.textContent > "0"){
         //bajamos el numero de intentos
         intentos.textContent--;
